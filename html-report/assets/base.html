@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>보고서 제목</title>
+<!-- Vault 모드라면 여기(<title> 바로 뒤)에 라벨 meta를 넣는다. 규칙은 references/vault-mode.md -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* html-report 기본 뼈대. 토큰과 공통 부품만 둔다. 쓰지 않는 부품의 CSS는 지운다.
+   부품별 HTML 조각은 references/*.md에 있다. */
+:root {
+  --bg: #f3f5f7;
+  --surface: #ffffff;
+  --surface-2: #f8fafb;
+  --ink: #15212c;
+  --muted: #5a6875;
+  --line: #d9e0e6;
+  --accent: #1f4f86;
+  --accent-soft: #e4ecf6;
+  --pass: #2e7a4c;
+  --pass-soft: #e3f1e8;
+  --hold: #a86a12;
+  --hold-soft: #f8eedb;
+  --block: #b23a2e;
+  --block-soft: #f7e3e0;
+  --plan: #6b4fa3;
+  --plan-soft: #eee8f7;
+  --term-bg: #11161c;
+  --term-ink: #d8e0e8;
+  --font-display: "Hahmlet", "Noto Serif KR", "AppleMyungjo", serif;
+  --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --radius: 10px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1419; --surface: #171e26; --surface-2: #1c242d; --ink: #e3e9ef; --muted: #96a3af; --line: #2a3541;
+    --accent: #7fb0e8; --accent-soft: #1b2b3e; --pass: #6cc191; --pass-soft: #16291f;
+    --hold: #e0a858; --hold-soft: #2e2414; --block: #ef8a7e; --block-soft: #331b18;
+    --plan: #b7a0e6; --plan-soft: #251e36; --term-bg: #0a0e12; --term-ink: #d8e0e8;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1419; --surface: #171e26; --surface-2: #1c242d; --ink: #e3e9ef; --muted: #96a3af; --line: #2a3541;
+  --accent: #7fb0e8; --accent-soft: #1b2b3e; --pass: #6cc191; --pass-soft: #16291f;
+  --hold: #e0a858; --hold-soft: #2e2414; --block: #ef8a7e; --block-soft: #331b18;
+  --plan: #b7a0e6; --plan-soft: #251e36; --term-bg: #0a0e12; --term-ink: #d8e0e8;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.65 var(--font-body); word-break: keep-all; overflow-wrap: anywhere; }
+main { max-width: 1080px; margin: 0 auto; padding: 28px 16px 64px; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.3; margin: 0; }
+h1 { font-size: clamp(1.6rem, 4vw, 2.2rem); }
+h2 { font-size: 1.3rem; margin: 44px 0 6px; scroll-margin-top: 16px; }
+h3 { font-size: 1.02rem; margin: 0 0 6px; }
+p { margin: 0 0 10px; }
+a { color: var(--accent); }
+code, .mono { font-family: var(--font-data); font-size: .86em; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button { font: inherit; font-size: .84rem; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 3px 10px; cursor: pointer; }
+button:hover { border-color: var(--accent); }
+input[type="range"] { accent-color: var(--accent); }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+
+/* 머리 */
+.lede { color: var(--muted); margin: 6px 0 0; }
+.sub { color: var(--muted); font-size: .9rem; margin: 0 0 16px; }
+.asof { font-family: var(--font-data); font-size: .78rem; color: var(--muted); margin-top: 10px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 0; }
+.chip { display: inline-flex; align-items: center; gap: 4px; padding: 2px 10px; border-radius: 999px; font-size: .78rem; font-weight: 600; border: 1px solid var(--line); background: var(--surface); white-space: nowrap; }
+.chip.pass { background: var(--pass-soft); color: var(--pass); border-color: transparent; }
+.chip.hold { background: var(--hold-soft); color: var(--hold); border-color: transparent; }
+.chip.block { background: var(--block-soft); color: var(--block); border-color: transparent; }
+.chip.plan { background: var(--plan-soft); color: var(--plan); border-color: transparent; }
+.chip.info { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; }
+.verdict { margin-top: 20px; border-left: 4px solid var(--accent); }
+.verdict strong { font-size: 1.05rem; }
+.grid { display: grid; gap: 12px; }
+.two { grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); margin-top: 12px; }
+
+/* KPI 카드: 값, 단위, 기준, 출처 */
+.kpis { grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr)); margin-top: 16px; }
+.kpi .num { font-family: var(--font-data); font-size: 1.5rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+.kpi .unit { font-size: .85rem; color: var(--muted); margin-left: 2px; }
+.kpi .lbl { color: var(--muted); font-size: .84rem; }
+.kpi .src { display: block; margin-top: 6px; font-size: .74rem; color: var(--muted); }
+.kpi svg.spark { display: block; width: 100%; height: 32px; margin-top: 6px; }
+
+/* 출처 표시: 숫자 옆 작은 꼬리표 */
+.src-tag { display: inline-block; max-width: 100%; font-family: var(--font-data); font-size: .7rem; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; margin-left: 4px; }
+
+/* 그림 상자: 그림 하나에 주장 하나, figcaption 한 문장 */
+figure.fig { margin: 14px 0 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+figure.fig figcaption { font-size: .86rem; color: var(--muted); margin-top: 10px; }
+.scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+svg text { font-family: var(--font-body); fill: var(--ink); }
+svg .muted { fill: var(--muted); }
+
+/* 표: 넓은 표만 상자 안에서 가로 스크롤 */
+.table-wrap { overflow-x: auto; margin-top: 12px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+table { width: 100%; border-collapse: collapse; font-size: .86rem; }
+table.wide { min-width: 620px; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { background: var(--accent-soft); font-weight: 600; position: sticky; top: 0; }
+td.num, th.num { text-align: right; font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: none; }
+
+/* 범례 */
+.legend { display: flex; flex-wrap: wrap; gap: 12px; color: var(--muted); font-size: .8rem; margin-top: 8px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+
+/* 정할 것, 확인하지 못한 것 */
+.decide { border-left: 4px solid var(--plan); }
+.unknown { border-left: 4px solid var(--hold); }
+ul.plain { margin: 6px 0 0; padding-left: 18px; font-size: .88rem; }
+
+/* 터미널 상자: 출력은 고치지 않는다. 합자를 끈다 */
+.term { background: var(--term-bg); color: var(--term-ink); border-radius: 8px; margin-top: 12px; overflow: hidden; }
+.term .term-head { font-family: var(--font-data); font-size: .72rem; color: #8b98a5; padding: 6px 12px; border-bottom: 1px solid #222b34; }
+.term pre { margin: 0; padding: 12px; overflow-x: auto; font: .8rem/1.55 var(--font-data); white-space: pre; font-variant-ligatures: none; }
+
+/* 캡처 그림 */
+figure.shot img { display: block; max-width: 100%; height: auto; border: 1px solid var(--line); border-radius: 6px; }
+
+/* 목차: 섹션이 4개 이상일 때만 */
+nav.toc { margin-top: 18px; font-size: .86rem; }
+nav.toc ol { margin: 0; padding-left: 20px; columns: 2 220px; }
+
+.foot { margin-top: 48px; color: var(--muted); font-size: .82rem; border-top: 1px solid var(--line); padding-top: 14px; }
+@media print { body { background: #fff; } .card, figure { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>보고서 제목</h1>
+    <p class="lede">이 보고서가 답하는 질문 한 줄.</p>
+    <div class="chips"><span class="chip pass">끝</span><span class="chip hold">기다림</span><span class="chip plan">다음</span></div>
+    <div class="card verdict"><strong>결론 한 문장.</strong> 판단한 사람과 근거 한 줄.</div>
+    <div class="grid kpis">
+      <div class="card kpi"><div class="lbl">핵심 숫자</div><div class="num">12<span class="unit">건</span></div><span class="src">실측 · 2026-11-03 · 어디서 쟀나</span></div>
+    </div>
+    <p class="asof">기준 시각 2026-11-03 KST · 정본 <code>경로/노트.md</code></p>
+  </header>
+
+  <section id="s1">
+    <h2>1. 첫 절</h2>
+    <p class="sub">이 절에서 말하려는 것 한 줄.</p>
+  </section>
+
+  <section id="decide">
+    <h2>정할 것과 확인하지 못한 것</h2>
+    <div class="grid two">
+      <div class="card decide"><h3>정할 것</h3><ul class="plain"><li>무엇을 · 누가 · 권장안</li></ul></div>
+      <div class="card unknown"><h3>확인하지 못한 것</h3><ul class="plain"><li>무엇을 · 왜 못 했나</li></ul></div>
+    </div>
+  </section>
+
+  <footer class="foot">근거: 정본 노트, 티켓, 원본 주소. 기준일과 출처 한 줄.</footer>
+</main>
+<script>
+/* 상태 저장은 try로 감싼다(sandbox에서 localStorage가 막힐 수 있다). 없어도 화면은 그대로 그려져야 한다. */
+function safeGet(k){ try { return localStorage.getItem(k); } catch (e) { return null; } }
+function safeSet(k,v){ try { localStorage.setItem(k,v); } catch (e) {} }
+</script>
+</body>
+</html>
