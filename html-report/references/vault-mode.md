@@ -27,11 +27,11 @@ Vault 밖에서 부를 때는 `claude --add-dir <vault 루트>`로 열려 있어
 
 ## 보는 화면의 CSP로 검사하기
 
-정본은 플랫폼 repo `makestarlab/infra-platform`의 `internal/vaultreports/sign.go` 안 `ReportCSP` 상수다. 값을 이 스킬에 복사하지 않고, 검사할 때마다 읽는다. 회사 repo라 회사 계정으로 읽는다(이 사용자의 셸은 폴더 위치로 gh 계정을 고른다. 회사 폴더 밖이면 `GH_CONFIG_DIR=~/.config/gh-work`를 붙인다).
+정본은 플랫폼 repo `makestarlab/infra-platform`의 `internal/vaultreports/sign.go` 안 `ReportCSP` 상수다. 값을 이 스킬에 복사하지 않고, 검사할 때마다 읽는다. 회사 repo라 회사 계정으로 읽는다(이 사용자의 `gh`는 `~/.local/bin/gh` 래퍼가 호출마다 계정을 고르고 `GH_CONFIG_DIR`은 무시한다. 강제로 고를 때는 `GH_ACCOUNT=work`를 붙인다).
 
 ```bash
 T="<세션 임시 폴더>"
-GH_CONFIG_DIR=~/.config/gh-work gh api repos/makestarlab/infra-platform/contents/internal/vaultreports/sign.go --jq .content | base64 -d > "$T/sign.go"
+GH_ACCOUNT=work gh api repos/makestarlab/infra-platform/contents/internal/vaultreports/sign.go --jq .content | base64 -d > "$T/sign.go"
 python3 - "$T/sign.go" "$T/vault-csp.txt" <<'EOF'
 import re, sys
 s = open(sys.argv[1]).read()
