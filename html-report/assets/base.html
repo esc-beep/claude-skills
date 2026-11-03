@@ -110,7 +110,8 @@ svg .muted { fill: var(--muted); }
 
 /* 표: 넓은 표만 상자 안에서 가로 스크롤 */
 .table-wrap { overflow-x: auto; margin-top: 12px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
-table { width: 100%; border-collapse: collapse; font-size: .86rem; }
+/* body의 overflow-wrap:anywhere는 표 칸의 최소 폭을 한 글자로 줄여 "단/계"처럼 끊는다. 표는 break-word로 */
+table { width: 100%; border-collapse: collapse; font-size: .86rem; overflow-wrap: break-word; }
 table.wide { min-width: 620px; }
 th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
 th { background: var(--accent-soft); font-weight: 600; position: sticky; top: 0; }
