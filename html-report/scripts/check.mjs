@@ -2,7 +2,8 @@
 // html-report 화면 확인. 밝음·어두움 × 넓은 폭·390px로 찍고, 가로 넘침·콘솔 오류·CSP 위반·크기 한도를 검사한다.
 //
 // 사용:
-//   node check.mjs <html> [--out <dir>] [--csp-file <file>] [--widths 1280,390] [--no-shots]
+//   node check.mjs <html> [--out <dir>] [--csp-file <file>] [--widths 1280,390] [--no-shots] [--per-section]
+//   --per-section: header·section·footer를 하나씩 따로 찍는다(긴 페이지를 직접 볼 때)
 //   --csp-file: 뷰어 CSP 문자열이 든 파일. 주면 실제 응답 헤더로 CSP(sandbox 포함)를 걸어 연다.
 //               Vault 모드에서 쓴다(값은 references/vault-mode.md가 가리키는 정본에서 그때 읽는다).
 // 결과: <out>/check.json, 화면 PNG. 문제가 있으면 종료 코드 1.
@@ -30,6 +31,7 @@ const widths = opt('--widths', '1280,390').split(',').map(Number);
 const cspFile = opt('--csp-file');
 const csp = cspFile ? readFileSync(cspFile, 'utf8').replace(/\s+/g, ' ').trim() : null;
 const shots = !flag('--no-shots');
+const perSection = flag('--per-section');
 
 const LIMIT_HTML = 3 * 1024 * 1024;   // HTML 전체 3MB
 const LIMIT_IMG = 300 * 1024;         // 그림 한 장 300KB
@@ -112,6 +114,17 @@ try {
       if (shots) {
         run.shot = join(out, `${stem}-${scheme}-${w}.png`);
         await page.screenshot({ path: run.shot, fullPage: true });
+      }
+      if (perSection) {
+        // 긴 페이지는 한 장으로 보면 축소돼 읽을 수 없다. header와 main > section을 하나씩 찍는다.
+        const els = await page.$$('main > header, main > section, main > footer');
+        run.sections = [];
+        for (const [k, el] of els.entries()) {
+          const id = (await el.getAttribute('id')) || (await el.evaluate(e => e.tagName.toLowerCase()));
+          const p = join(out, `${stem}-${scheme}-${w}-${String(k).padStart(2, '0')}-${id}.png`);
+          await el.screenshot({ path: p }).catch(() => {});
+          run.sections.push(p);
+        }
       }
       report.runs.push(run);
       await ctx.close();

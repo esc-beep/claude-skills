@@ -78,7 +78,7 @@ for s,e in zip(sys.argv[3::2],sys.argv[4::2]):
   <li class="ev ev-fix"><time>HH:MM</time><b>복구</b><p>무엇을 바꿨나</p></li>
 </ol>
 <style>
-.tl { list-style: none; margin: 12px 0 0; padding: 0 0 0 22px; border-left: 2px solid var(--line); }
+.tl { list-style: none; margin: 12px 0 0 8px; padding: 0 0 0 22px; border-left: 2px solid var(--line); }
 .ev { position: relative; margin: 0 0 14px; font-size: .88rem; }
 .ev::before { content: ""; position: absolute; left: -29px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
 .ev time { display: block; font-family: var(--font-data); font-size: .76rem; color: var(--muted); }
@@ -95,15 +95,15 @@ for s,e in zip(sys.argv[3::2],sys.argv[4::2]):
 ## 조각: 일정 띠(앞으로)
 
 ```html
-<div class="plan">
+<div class="plan-band">
   <div class="slot"><span class="when">11-03 ~ 11-07</span><b>할 일</b><p>누가 · 무엇</p></div>
   <div class="slot gate"><span class="when">11-10 판정</span><b>판정 기준</b><p>지표와 임계값 · 실패 시 무엇을</p></div>
 </div>
 <style>
-.plan { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr)); margin-top: 12px; }
-.plan .slot { background: var(--surface); border: 1px solid var(--line); margin: -1px 0 0 -1px; padding: 12px; font-size: .84rem; min-width: 0; }
-.plan .slot .when { display: block; font-family: var(--font-data); font-size: .76rem; color: var(--plan); font-weight: 500; }
-.plan .slot.gate { background: var(--plan-soft); }
-.plan .slot p { margin: 2px 0 0; color: var(--muted); }
+.plan-band { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr)); margin-top: 12px; }
+.plan-band .slot { background: var(--surface); border: 1px solid var(--line); margin: -1px 0 0 -1px; padding: 12px; font-size: .84rem; min-width: 0; }
+.plan-band .slot .when { display: block; font-family: var(--font-data); font-size: .76rem; color: var(--plan); font-weight: 500; }
+.plan-band .slot.gate { background: var(--plan-soft); }
+.plan-band .slot p { margin: 2px 0 0; color: var(--muted); }
 </style>
 ```

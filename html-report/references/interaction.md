@@ -76,6 +76,30 @@ document.querySelectorAll('[data-ft]').forEach(root => {
 
 `data-*` 값이 여럿이면 공백으로 나눈다(예: `data-type="entry attach"`).
 
+### 좁은 화면에서는 행을 카드로
+
+열이 5개 넘는 표는 390px에서 가로 스크롤 상자 안에서도 칸이 좁아져 한 행이 길게 늘어진다. JS가 머리글을 칸 라벨(`data-l`)로 붙이고 `cards` 클래스를 더해, 좁은 화면에서는 행마다 카드로 보인다. JS가 없으면 가로 스크롤 표로 남는다. 머리글에 꼬리표가 붙어 있으면 `<th data-l="유형">`처럼 라벨을 따로 준다.
+
+```html
+<style>
+tr[hidden] { display: none !important; }   /* 아래 display:block이 hidden을 이기지 않게 */
+@media (max-width: 640px) {
+  table.cards { min-width: 0; }
+  table.cards thead { display: none; }
+  table.cards tr { display: block; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  table.cards td { display: block; border: 0; padding: 2px 0; }
+  table.cards td::before { content: attr(data-l); display: inline-block; min-width: 4.6em; color: var(--muted); font-size: .74rem; margin-right: 6px; }
+}
+</style>
+<script>
+document.querySelectorAll('[data-ft]').forEach(root => {
+  const heads = [...root.querySelectorAll('thead th')].map(th => th.dataset.l || th.textContent.trim());
+  root.querySelectorAll('tbody tr').forEach(r => [...r.cells].forEach((td, i) => td.dataset.l = heads[i] || ''));
+  root.querySelector('table').classList.add('cards');
+});
+</script>
+```
+
 ## 조각: 탭
 
 상태 보고에서만 쓴다(학습·설명은 탭 없이 긴 페이지). 탭 id는 바꾸지 않는다. 배너와 다음 단계는 탭 밖에 둔다. 빈 탭을 두지 않는다. [2][9]

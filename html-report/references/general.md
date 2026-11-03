@@ -30,6 +30,11 @@
 - 색만으로 뜻을 전하지 않는다. 글자, 모양, 무늬를 함께. [1][4][7]
 - SVG에는 viewBox, 그림에는 width·height. [1]
 
+## 클래스 이름
+
+- 부품 클래스에는 부품 앞머리를 붙인다(`.g-`, `.hb-`, `.ev-`, `.pair-`, `.ft-`, `.plan-band`). 상태 수식어(`pass`, `hold`, `block`, `plan`, `info`, `done`, `fix`, `key`)와 같은 이름을 단독 부품 클래스로 쓰지 않는다.
+- 2026-11-03 첫 검증에서 두 번 부딪혔다. 원인 → 대책의 `.fix`가 타임라인의 `.ev.fix`에 배경을 깔았고, 일정 띠의 `.plan { display: grid }`가 상태 chip `.chip.plan`을 grid로 펼쳤다.
+
 ## 넘침 점검 목록
 
 - grid·flex 자식에 `min-width: 0`. 긴 경로·ID에는 `overflow-wrap: anywhere`(`body`에 이미 있다). [1]
