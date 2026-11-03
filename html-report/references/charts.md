@@ -37,9 +37,9 @@
 
 ```html
 <figure class="fig">
-  <div class="hbars" role="img" aria-label="원인 유형별 건수: 부속 미복제 6, 진입점 6, 재개 누락 6">
-    <div class="hb"><span class="hb-l">부속 구성 미복제</span><span class="hb-t"><i style="width:100%"></i></span><span class="hb-v">6</span></div>
-    <div class="hb"><span class="hb-l">일부러 끈 값의 재개 누락</span><span class="hb-t"><i style="width:83%"></i></span><span class="hb-v">5</span></div>
+  <div class="hbars" role="img" aria-label="원인 유형별 건수: 설정 누락 6, 권한 부족 5">
+    <div class="hb"><span class="hb-l">설정 누락</span><span class="hb-t"><i style="width:100%"></i></span><span class="hb-v">6</span></div>
+    <div class="hb"><span class="hb-l">권한 부족</span><span class="hb-t"><i style="width:83%"></i></span><span class="hb-v">5</span></div>
   </div>
   <figcaption>주장 한 문장. <span class="src-tag">이 보고서가 셈</span></figcaption>
 </figure>
@@ -60,12 +60,12 @@
 
 ```html
 <div class="card kpi">
-  <div class="lbl">전환 후 누락</div>
+  <div class="lbl">이번 주 장애</div>
   <div class="num">14<span class="unit">건</span></div>
-  <svg class="spark" viewBox="0 0 100 24" preserveAspectRatio="none" role="img" aria-label="일별 발견: 10-19 2건, 10-20 9건, 10-21 3건">
+  <svg class="spark" viewBox="0 0 100 24" preserveAspectRatio="none" role="img" aria-label="일별: 월 2건, 화 9건, 수 3건">
     <polyline fill="none" stroke="var(--series-1)" stroke-width="2" vector-effect="non-scaling-stroke" points="0,18 50,2 100,15"/>
   </svg>
-  <span class="src">실측 · 10-19~10-21 · 정본 3절</span>
+  <span class="src">실측 · 기간 · 출처</span>
 </div>
 ```
 

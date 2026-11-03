@@ -29,10 +29,10 @@ Gantt, 마일스톤, 타임라인, 판정 시점. 기본은 CSS로 그린다(Mer
 
 ```html
 <figure class="fig">
-  <div class="gantt" role="img" aria-label="07-11부터 10-21까지 8단계 일정">
+  <div class="gantt" role="img" aria-label="7월부터 10월까지 단계 일정">
     <div class="g-axis"><span style="--s:0%">07-11</span><span style="--s:24.1%">08-01</span><span style="--s:48.2%">09-01</span><span style="--s:72.3%">10-01</span><span style="--s:100%">10-21</span></div>
-    <div class="g-row"><span class="g-lab">결정<small>INF-1076</small></span><span class="g-track"><i class="g-bar done" style="--s:0%;--w:12.1%"></i></span></div>
-    <div class="g-row"><span class="g-lab">전환<small>INF-1677</small></span><span class="g-track"><i class="g-bar key" style="--s:88%;--w:1.5%"></i><b class="g-mk" style="--s:88%">10-16 DNS 전환</b></span></div>
+    <div class="g-row"><span class="g-lab">결정<small>T-1</small></span><span class="g-track"><i class="g-bar done" style="--s:0%;--w:12.1%"></i></span></div>
+    <div class="g-row"><span class="g-lab">전환<small>T-2</small></span><span class="g-track"><i class="g-bar key" style="--s:88%;--w:1.5%"></i><b class="g-mk" style="--s:88%">전환일</b></span></div>
     <div class="g-today" style="--t:1" aria-hidden="true"></div>
   </div>
   <div class="legend"><span><i style="background:var(--pass)"></i>끝</span><span><i style="background:var(--block)"></i>핵심</span><span><i style="background:var(--plan)"></i>다음</span></div>

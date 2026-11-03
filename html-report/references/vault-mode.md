@@ -41,7 +41,7 @@ EOF
 node ~/.claude/skills/html-report/scripts/check.mjs "<html>" --out "$T/check" --csp-file "$T/vault-csp.txt"
 ```
 
-상수를 못 찾으면(이름이나 파일이 바뀜) 검사를 건너뛰지 말고 사용자에게 알린다. 2026-11-03에 확인한 성질: 외부 script·style은 jsdelivr만, 그림은 `data:`·`blob:`만, 밖으로 보내는 요청은 막힘, `unsafe-eval` 없음, sandbox에 `allow-same-origin` 없음(localStorage는 try로 감싼다). 이 성질이 바뀌었을 수 있으니 값은 위 명령으로 다시 읽는다.
+상수를 못 찾으면(이름이나 파일이 바뀜) 검사를 건너뛰지 말고 사용자에게 알린다. 허용 범위를 이 파일에 요약해 두지 않는다. 필요하면 위 명령으로 읽은 값을 그 자리에서 본다.
 
 ## 주의
 

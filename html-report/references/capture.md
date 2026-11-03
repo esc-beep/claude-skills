@@ -31,7 +31,7 @@
    - 로그인 화면 판단은 주소 패턴으로 한다(Google, Microsoft, GitHub, Okta, Atlassian, `/login`, `/sso/` 등). 맞지 않는 사이트는 `--login-pattern '<정규식>'`을 더한다.
 4. **가린다.** `--mask-common`은 IPv4, 메일 주소, 흔한 토큰 접두사(`ghp_`, `AKIA`, `AIza`, `ya29` 등), 40자 넘는 무작위 문자열을 바꿔 쓴다(git 커밋·sha256 해시는 그대로 둔다). 그 밖은:
    - 요소 덮기: `--mask '.user-email,.avatar'`(흐림이 아니라 칠해서 덮는다. 흐림은 되살릴 수 있다)
-   - 글 바꾸기: `--replace 'mystarroom-[a-z0-9-]+=>[프로젝트]'`
+   - 글 바꾸기: `--replace 'acme-prod-[a-z0-9-]+=>[프로젝트]'`
    - 가릴 것: 비밀 값, 토큰, 접속 IP, 내부 리졸버 주소, 개인 메일·아바타·이름(업무상 필요한 곳 제외), 고객 데이터, 보고서에 필요 없는 프로젝트·파드 이름.
 5. **직접 본다.** `dwebp -quiet x.webp -o x.png`로 바꿔 열어 본다. 가릴 것이 남았거나, 쿠키 배너·알림 같은 군더더기가 있으면 범위를 줄여 다시 찍는다.
 6. **확인받는다.** 사용자에게 그림(PNG 경로), 찍은 시각(KST), 가린 것, 크기를 보여 주고 넣어도 되는지 묻는다. 확인 전에는 넣지 않는다.
@@ -45,8 +45,8 @@
 
 ```html
 <figure class="fig shot">
-  <img src="shots/x.webp" width="1160" height="380" alt="새 Stage Cloud Build 트리거 6개, 모두 사용 설정됨" loading="lazy">
-  <figcaption>주장 한 문장. <span class="src-tag">캡처 · 2026-11-03 12:43 KST · console.cloud.google.com</span></figcaption>
+  <img src="shots/x.webp" width="1160" height="380" alt="빌드 트리거 6개, 모두 사용 설정됨" loading="lazy">
+  <figcaption>주장 한 문장. <span class="src-tag">캡처 · YYYY-MM-DD HH:MM KST · &lt;host&gt;</span></figcaption>
 </figure>
 ```
 
@@ -58,11 +58,11 @@
 
 ```html
 <div class="term">
-  <div class="term-head">2026-11-03 12:40 KST · 로컬 · gcloud builds triggers list --region asia-northeast3</div>
+  <div class="term-head">YYYY-MM-DD HH:MM KST · 로컬 · &lt;실행한 읽기 명령&gt;</div>
   <pre>NAME
-app-stage-deploy
+svc-a-deploy
 …(같은 꼴 4줄 줄임)
-thumbnail-stage-deploy</pre>
+svc-f-deploy</pre>
 </div>
 ```
 
