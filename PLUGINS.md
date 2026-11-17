@@ -11,9 +11,11 @@
 | 검토한 커밋 | `9af7bfd0bc47fdad43c2eaa7a43cd13918e7aaef` (설치 시점의 마켓플레이스 HEAD와 같음) |
 | 검토·설치 날짜 | 2026-11-17 |
 
-### 설치한 플러그인 (user 범위)
+### 설치한 플러그인 (user 범위, 모두 꺼 둠)
 
 `pm-product-discovery`, `pm-product-strategy`, `pm-execution`, `pm-market-research`, `pm-data-analytics`, `pm-go-to-market`, `pm-marketing-growth`, `pm-toolkit`
+
+설치는 해 두되 모두 `claude plugin disable`로 꺼 두었다. 꺼 두면 스킬과 명령이 로드되지 않아, 평소 요청에 끼어들지 않고 컨텍스트도 차지하지 않는다. 쓸 때는 `pm` 지휘 스킬이 `~/.claude/plugins/marketplaces/pm-skills/<플러그인>/skills/<스킬>/SKILL.md`를 직접 읽는다. 개별 명령(`/write-prd` 등)을 직접 쓰고 싶으면 `claude plugin enable <플러그인>@pm-skills`로 켠다.
 
 ```bash
 for p in pm-product-discovery pm-product-strategy pm-execution pm-market-research \
@@ -33,8 +35,8 @@ done
 - `/generate-data`, `ab-test-analysis`, `analyze-cohorts`는 스크립트를 실행한다(일반 권한 확인을 거친다).
 - `create-prd`는 시장 조사를 위해 웹 검색을 하라고 한다. 내부 기획을 다룰 때는 검색어에 기밀 내용을 넣지 않는다.
 - 트리거가 겹치는 것: `create-prd`와 `show-me-the-prd`("PRD 만들어줘"). 원하는 쪽을 이름으로 부른다.
-- 스킬과 명령이 합쳐 약 100개라 세션마다 설명이 컨텍스트에 실린다. 안 쓰는 플러그인은 `claude plugin disable <plugin>@pm-skills`로 끈다.
+- 스킬과 명령이 합쳐 약 100개라, 켜 두면 세션마다 설명이 컨텍스트에 실린다. 그래서 꺼 두고 `pm`으로만 쓴다.
 
 ### 업데이트
 
-`claude plugin marketplace update pm-skills` 전에 원본의 `9af7bfd..HEAD` 변경을 읽고, 위 검토 항목(hooks, MCP, 스크립트 실행, 숨김 지시)을 다시 확인한다. 문제가 없으면 업데이트하고 이 문서의 커밋을 고친다.
+`claude plugin marketplace update pm-skills` 전에 원본의 `9af7bfd..HEAD` 변경을 읽고, 위 검토 항목(hooks, MCP, 스크립트 실행, 숨김 지시)을 다시 확인한다. 스킬 폴더 이름이 바뀌었으면 `pm/SKILL.md`의 경로표도 고친다. 문제가 없으면 업데이트하고 이 문서의 커밋을 고친다.

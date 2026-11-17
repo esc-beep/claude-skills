@@ -1,5 +1,6 @@
 ---
 name: show-me-the-prd
+disable-model-invocation: true
 description: Interview-driven PRD generator for vibe coders — turns one sentence into 4 design documents (PRD, data model, phase separation, project spec) via 5-6 structured questions. Korean triggers: "/show-me-the-prd", "PRD 만들어줘", "기획서 만들어줘", "쇼미더피알디", "앱 기획해줘", "서비스 기획". English triggers: "make PRD", "product spec", "show me the PRD".
 ---
 
