@@ -40,3 +40,28 @@ done
 ### 업데이트
 
 `claude plugin marketplace update pm-skills` 전에 원본의 `9af7bfd..HEAD` 변경을 읽고, 위 검토 항목(hooks, MCP, 스크립트 실행, 숨김 지시)을 다시 확인한다. 스킬 폴더 이름이 바뀌었으면 `pm/SKILL.md`의 경로표도 고친다. 문제가 없으면 업데이트하고 이 문서의 커밋을 고친다.
+
+## frontend-design (claude-plugins-official)
+
+| 항목 | 값 |
+|---|---|
+| 원본 | https://github.com/anthropics/claude-plugins-official/tree/main/plugins/frontend-design (Apache-2.0) |
+| 마켓플레이스 이름 | `claude-plugins-official` (기본으로 들어 있는 Anthropic 공식 마켓플레이스) |
+| 버전 | 1.1.1 |
+| 검토 기준 | 플러그인 폴더의 마지막 커밋 `30202c767cfa`(2026-10-26). 설치본 `SKILL.md`의 blob `a5333457c414`가 원본 `main`과 같음 |
+| 검토·설치 날짜 | 2026-11-18, user 범위, 켜 둠 |
+
+```bash
+claude plugin install frontend-design@claude-plugins-official
+```
+
+### 검토 결과
+
+- **들어 있는 것:** `SKILL.md`, README, `plugin.json`, 라이선스 파일 두 개뿐이다. hooks, MCP 서버, 스크립트, 설정 변경은 없다.
+- **하는 일:** 화면을 만들 때 따를 디자인 지침이다. 서체, 색, 레이아웃, 흔한 AI 디자인 피하기, 스크린숏으로 스스로 점검하기를 다룬다. 코드를 대신 만들지는 않는다.
+- **주의:** "과감한 미적 선택"을 권하는 방향이다. 기존 서비스 화면에 맞춰야 할 때는 그 서비스의 색·서체 변수를 기준으로 하라고 따로 지시한다.
+- **켜 둔 이유:** 설명이 짧아 컨텍스트 부담이 작고, 화면을 만드는 작업에만 걸린다.
+
+### 업데이트
+
+`claude plugin marketplace update claude-plugins-official` 뒤에 `plugins/frontend-design`의 `30202c767cfa..HEAD` 변경을 읽는다. hooks, 스크립트, 설정 변경이 새로 생겼는지 확인하고, 이 문서의 커밋을 고친다.
